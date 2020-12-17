@@ -1,7 +1,11 @@
 require('dotenv').config()
+const express = require('express')
+const app = express()
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const Twit = require('twit')
+
+const PORT = process.env.PORT || 3000;
 
 var T = new Twit({
    consumer_key:         process.env.TWITTER_CONSUMER_KEY,
@@ -48,6 +52,10 @@ client.on('ready', () => {
 
    // Start the insult bot
    setTimeout(theBestFunc, 5000);
+});
+
+app.listen(PORT, () => {
+   console.log(`God is running on port ${ PORT }`);
 });
 
 // This handles insulting ppl :)
