@@ -1,6 +1,4 @@
 require('dotenv').config()
-const express = require('express')
-const app = express()
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const Twit = require('twit')
@@ -28,7 +26,10 @@ const insultList = ["Hey fuck you ",
                     "You're pretty cool ",
                     "You're a poor little peasant to me ",
                     "I'm just a bot but I still have more brain cells than you in just a microbe in my left nut ",
-                    "You look like you take destroy-your-dick December seriously "]
+                    "You look like you take destroy-your-dick December seriously ",
+                    "If you were anymore inbred, you'd be a sandwich ",
+                    "Who asked ",
+                    ]
 
 client.on('ready', () => {
    console.log(`Logged in as ${client.user.tag}!`);
@@ -52,10 +53,6 @@ client.on('ready', () => {
 
    // Start the insult bot
    setTimeout(theBestFunc, 5000);
-});
-
-app.listen(PORT, () => {
-   console.log(`God is running on port ${ PORT }`);
 });
 
 // This handles insulting ppl :)
