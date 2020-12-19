@@ -80,18 +80,25 @@ const theBestFunc = async () => {
    botChannel.send(chosenInsult + chosenUser.toString() );
 
    // Redo this all again in minTime to maxTime
-   const minTime = 30;
-   const maxTime = 90;
-   const timeMultiplier = 1000 * 60;
+   const minTime = 12;
+   const maxTime = 36;
+   const timeMultiplier = 1000 * 60 * 60;
    let timeToWait = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime;
-   console.log("Waiting " + timeToWait + " minutes.");
+   console.log("Waiting " + timeToWait + " hours.");
    setTimeout(theBestFunc, timeToWait * timeMultiplier);
 };
 
 // Just to test if alive
-client.on('message', msg => {
+client.on('message', async (msg) => {
    if (msg.content === 'ping') {
       msg.reply('Pong!');
+   }
+   if(msg.content === 'make it all go bai bai')
+   {
+      if(msg.author.id == process.env.DISCORD_MY_ID)
+      {
+         msg.channel.bulkDelete(100);
+      }
    }
 });
 
