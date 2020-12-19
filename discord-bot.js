@@ -31,24 +31,30 @@ const insultList = ["Hey fuck you ",
                     "Who asked ",
                     ]
 
+const twitterSearchString = 'restock';
+
 client.on('ready', () => {
    console.log(`Logged in as ${client.user.tag}!`);
 
    // Start the twitter stream to watch for tweets
-   var stream = T.stream('statuses/filter', { follow: [process.env.TWITTER_USER_ID], track: ['restock'] })
+   var stream = T.stream('statuses/filter', { follow: [process.env.TWITTER_USER_ID], track: [twitterSearchString] })
    stream.on('tweet', async (tweet) => {
-     // Create the content of the message
-     // Only post in discord if this is a tweet from the actual user
-     if(tweet.user.id_str == process.env.TWITTER_USER_ID)
-     {
-         var url = "https://twitter.com/" + tweet.user.screen_name + "/status/" + tweet.id_str;
-         try {
-            let botChannel = await client.channels.fetch(process.env.DISCORD_GRAPHICS_CHANNEL_ID);
-            botChannel.send(url);
-         } catch (error) {
-            console.error(error);
+      // Create the content of the message
+      // Only post in discord if this is a tweet from the actual user
+      const text = tweet.extended_tweet ? tweet.extended_tweet.full_text : tweet.text;
+      if (text.search(twitterSearchString) != -1)
+      {
+         if (tweet.user.id_str == process.env.TWITTER_USER_ID)
+         {
+               var url = "https://twitter.com/" + tweet.user.screen_name + "/status/" + tweet.id_str;
+               try {
+                  let botChannel = await client.channels.fetch(process.env.DISCORD_GRAPHICS_CHANNEL_ID);
+                  botChannel.send(url);
+               } catch (error) {
+                  console.error(error);
+               }
          }
-     }
+      }
    });
 
    // Start the insult bot
