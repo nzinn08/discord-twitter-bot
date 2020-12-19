@@ -42,7 +42,7 @@ client.on('ready', () => {
       // Create the content of the message
       // Only post in discord if this is a tweet from the actual user
       const text = tweet.extended_tweet ? tweet.extended_tweet.full_text : tweet.text;
-      if (text.search(twitterSearchString) != -1)
+      if (text.toLowerCase().search(twitterSearchString) != -1)
       {
          if (tweet.user.id_str == process.env.TWITTER_USER_ID)
          {
